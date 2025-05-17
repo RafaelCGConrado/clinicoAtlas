@@ -33,12 +33,14 @@ def semantics_tab():
                 config.graph_add_flag = True
                 config.relationship_label_flag = True
                 
-                util.add_to_concept_list()
-                st.write(config.concepts_list)
+                util.add_label_to_knowledge_dict(config.origin_concept, config.destination_concept,
+                                                 config.concepts_relationship_label)
+                # util.add_to_concept_list()
+                # st.write(config.concepts_list)
                 
             
         with st.expander("Knowledge Graph", expanded=True):
-            if(config.NxGraph is None):
+            if(config.KGraph is None):
                 util.generate_graph()
             
             if(config.graph_add_flag):
@@ -63,8 +65,8 @@ def semantics_tab():
                     
                     st.write(config.feature_response)
                 if(st.button("Accept generated Concept Feature Label")):
-                    util.add_to_features_dict(config.origin_concept, config.destination_concept, config.selected_feature, config.feature_response)
-                    st.write(config.features_dict[(config.origin_concept, config.destination_concept)])
+                    util.add_feature_to_knowledge_dict(config.origin_concept, config.destination_concept, config.selected_feature, config.feature_response)
+                    st.write(config.knowledge_dict[(config.origin_concept, config.destination_concept)])
                 
             
         

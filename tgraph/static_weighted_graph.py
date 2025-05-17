@@ -21,11 +21,11 @@ class StaticWeightedGraph():
             self.get_out_measures()
             self.data_network.df_nodes[fn.WEIGHTED_IN_DEGREE] = self.data_network.df_nodes['in_'+fn.SUM_MEASURE]
             self.data_network.df_nodes[fn.WEIGHTED_OUT_DEGREE] = self.data_network.df_nodes['out_'+fn.SUM_MEASURE]
-            self.data_network.df_nodes[fn.WEIGHTED_DEGREE] = self.data_network.df_nodes[fn.WEIGHTED_IN_DEGREE] + self.data_network.df_nodes[fn.WEIGHTED_OUT_DEGREE]
+           # self.data_network.df_nodes[fn.WEIGHTED_DEGREE] = self.data_network.df_nodes[fn.WEIGHTED_IN_DEGREE] + self.data_network.df_nodes[fn.WEIGHTED_OUT_DEGREE]
         else:
             self.fill_weighted_degrees_as_frequency(node_direction=fn.SOURCE, column_name=fn.WEIGHTED_OUT_DEGREE)
             self.fill_weighted_degrees_as_frequency(node_direction=fn.DESTINATION, column_name=fn.WEIGHTED_IN_DEGREE)
-            self.data_network.df_nodes[fn.WEIGHTED_DEGREE] = self.data_network.df_nodes[fn.WEIGHTED_IN_DEGREE] + self.data_network.df_nodes[fn.WEIGHTED_OUT_DEGREE]
+          #  self.data_network.df_nodes[fn.WEIGHTED_DEGREE] = self.data_network.df_nodes[fn.WEIGHTED_IN_DEGREE] + self.data_network.df_nodes[fn.WEIGHTED_OUT_DEGREE]
 
     # Problem when we need to deal with the timestamp here
     # def fill_weighted_in_degree(self):

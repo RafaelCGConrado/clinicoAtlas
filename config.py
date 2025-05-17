@@ -68,6 +68,7 @@ table = None
 
 #Graph
 NxGraph = None
+KGraph = None 
 
 #concepts
 origin_concept = None
@@ -98,7 +99,7 @@ features = ["in_degree",
             "weighted_out_degree",
             "core_number"]
 
-features_dict = {
+knowledge_dict = {
     
 }
 

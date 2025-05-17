@@ -17,7 +17,7 @@ IN_DEGREE = "in_degree"
 WEIGHTED_OUT_DEGREE = "weighted_out_degree"
 WEIGHTED_IN_DEGREE = "weighted_in_degree"
 WEIGHTED_DEGREE = "weighted_degree"
-CORE = "core"
+CORE = "core_number"
 TOTAL_COUNT="total_count"
 
 # Measure features

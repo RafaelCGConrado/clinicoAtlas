@@ -324,45 +324,64 @@ def add_to_concept_list():
 
 #Add origin/destination pair to features dictionary
 def add_feature_pair(origin_concept, destination_concept):
-    config.features_dict[(origin_concept, destination_concept)] = {
-        "in_degree": " ",
-        "out_degree": " ",
-        "in_average_IAT": " ",
-        "out_average_IAT": " ",
-        "weighted_in_degree": " ",
-        "weighted_out_degree": " ",
-        "core_number": " "
+    config.knowledge_dict[(origin_concept, destination_concept)] = {
+        "label": "undefined label",
+        "in_degree": "undefined in_degree",
+        "out_degree": "undefined out_degree",
+        "in_average_IAT": "undefined in average iat",
+        "out_average_IAT": "undefined out average iat",
+        "weighted_in_degree": "undefined weighted_in_degree",
+        "weighted_out_degree": "undefined weighted_out_degree",
+        "core_number": "undefined core_number"
     }
 
-#Add feature name --> feature meaning to features dictionary
-def add_to_features_dict(origin_concept, destination_concept, feature_name, feature_meaning):
-    if(origin_concept, destination_concept) not in config.features_dict:
+def add_label_to_knowledge_dict(origin_concept, destination_concept, label_name):
+    if(origin_concept, destination_concept) not in config.knowledge_dict:
         add_feature_pair(origin_concept, destination_concept)
+    config.knowledge_dict[(origin_concept, destination_concept)]["label"] = label_name
+
+#Add feature name --> feature meaning to features dictionary
+def add_feature_to_knowledge_dict(origin_concept, destination_concept, feature_name, feature_meaning):
+    config.knowledge_dict[(origin_concept, destination_concept)][feature_name] = feature_meaning
+
+
+
+def get_label(origin_concept, destination_concept):
+    if(origin_concept, destination_concept) not in config.knowledge_dict:
+        return "undefined label"
+    return config.knowledge_dict[(origin_concept, destination_concept)]["label"]
+
+def get_feature(origin_concept, destination_concept, feature):
+    if(origin_concept, destination_concept) not in config.knowledge_dict:
+        return "Undefined"
     
-    config.features_dict[(origin_concept, destination_concept)][feature_name] = feature_meaning
+    if feature not in config.knowledge_dict[(origin_concept, destination_concept)]:
+        return feature
+
+    return config.knowledge_dict[(origin_concept, destination_concept)][feature]
+
 
 
 #Generate Knowledge/Conceptual Graph
 def generate_graph():
-    G = nx.Graph()
-    config.NxGraph = G 
-
+    config.KGraph = nx.Graph()
+     
 #Add related nodes to knowledge graph
 def add_node():
-    config.NxGraph.add_node(config.origin_concept)
-    config.NxGraph.add_node(config.destination_concept)
-    config.NxGraph.add_edge(config.origin_concept, config.destination_concept,
+    config.KGraph.add_node(config.origin_concept)
+    config.KGraph.add_node(config.destination_concept)
+    config.KGraph.add_edge(config.origin_concept, config.destination_concept,
                             label=config.concepts_relationship_label)
 
 def plot_graph():
-    nt = Network("750px", width="100%", notebook=True)
-    nt.from_nx(config.NxGraph)
+    gt = Network("750px", width="100%", notebook=True)
+    gt.from_nx(config.KGraph)
 
-    for node in nt.nodes:
+    for node in gt.nodes:
         node['size']= 50
         node['color'] = "#FF0000"
 
-    nt.repulsion(node_distance=100, spring_strength=0.05, damping=0.09)
+    gt.repulsion(node_distance=100, spring_strength=0.05, damping=0.09)
 
-    nt.show("nx.html")
-    st.components.v1.html(open("nx.html").read(), height=300, width=950)
+    gt.show("kg.html")
+    st.components.v1.html(open("kg.html").read(), height=300, width=950)

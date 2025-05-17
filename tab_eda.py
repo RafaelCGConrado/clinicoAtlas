@@ -66,7 +66,8 @@ def eda_tab():
         graph_construct_submitted = form_model_graph.form_submit_button("Criar grafo", use_container_width=True)
 
         if graph_construct_submitted:
-            semantic_label = semantic.extract_semantic_label(config.opt_source, config.opt_destination)
+            #semantic_label = semantic.extract_semantic_label(config.opt_source, config.opt_destination)
+            semantic_label = util.get_label(config.opt_source, config.opt_destination)
             st.write(config.opt_source + " " + semantic_label +" "+config.opt_destination)
            
             tgraph_columns = []
@@ -87,9 +88,10 @@ def eda_tab():
                     #Tradução das features de acordo com as semânticas definidas
                     feature_mapping = {}
                     for feature in config.df_tgraph_features.columns:
-                        translated_feature = semantic.extract_semantic_feature(config.opt_source, config.opt_destination, feature)
-                        if (translated_feature != "undefined"):
-                            feature_mapping[feature] = translated_feature
+                        #translated_feature = semantic.extract_semantic_feature(config.opt_source, config.opt_destination, feature)
+                        translated_feature = util.get_feature(config.opt_source, config.opt_destination, feature)
+                        feature_mapping[feature] = translated_feature
+                        
 
 
                     config.df_tgraph_features.rename(columns=feature_mapping, inplace=True)
