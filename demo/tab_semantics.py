@@ -35,11 +35,9 @@ def semantics_tab():
                 
                 util.add_label_to_knowledge_dict(config.origin_concept, config.destination_concept,
                                                  config.concepts_relationship_label)
-                # util.add_to_concept_list()
-                # st.write(config.concepts_list)
                 
             
-        with st.expander("Knowledge Graph", expanded=True):
+        with st.expander("Conceptual Graph", expanded=True):
             if(config.KGraph is None):
                 util.generate_graph()
             
@@ -54,7 +52,6 @@ def semantics_tab():
             config.selected_feature = st.selectbox(label="Node Feature", options=(config.features), index=None, placeholder="Features List")
             config.feature_prompt_text = llm_interface.generate_prompt(config.features_prompts, "feature")
 
-            #ARRUMAR ISSO AQUI, TA COM MUITO IF
             if config.feature_prompt_text:
                 prompt_form = st.form(key='prompt_form_features')
                 prompt_statement = prompt_form.text_area("Prompt:", value=config.feature_prompt_text)

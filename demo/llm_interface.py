@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import config
 
-#templates for relationship labels
+#Templates for Relationship Labels
 templates = {
 "no_shot_simple_prompt" :
 """
@@ -99,7 +99,7 @@ Pair to answer: {question}
 """
 }
 
-#Templates for features
+#Templates for Node Features
 ft_templates = {"initial_template":"""
 Context: {Contex} 
         
@@ -125,15 +125,7 @@ explainft = {"in_degree":"The in-degree measure of a given node A indicates the 
                 "core_number":"The core-number in a graph represents the largest k-core in which the node is included."}
 
 
-# def Verify_LLM_Existence(LLM_Name:list):
-#     result = subprocess.run(["ollama","list"], capture_output=True, text=True)
-#     result = result.stdout.split()
-#     # if LLM_Name not in result:
-#     #     print(f"Some requirements were not satisfied LLM {LLM_Name} is not locally downloaded")
-#     #     return 0 
-#     return 1
-
-
+#Generate the prompt that will be used in the LLM
 def generate_prompt(prompt_type, prompt_class):
     template = ""
     if prompt_class == "relationship":
@@ -153,20 +145,20 @@ def generate_label(model, prompt, concept_pair):
     chain = prompt | current_model
     response = chain.invoke({"question":concept_pair})
 
-    #Encontrar qualquer linha que começa com "Answer"
+    #Find any line starting with "Answer"
     regex = r"^Answer\b.*"
     response = re.findall(regex, response, re.MULTILINE)
 
-    # Remover o prefixo "Answer:"
+    # Remove prefix "Answer:"
     regex1 = r"^Answer:\s*"
     response = [re.sub(regex1, "", r) for r in response]
 
-    # Substituir palavras por elas mesmas entre aspas
+    # Put the words between " "
     regex2 = r"\b\w+\b"
     response = [re.findall(r'"(.*?)"', re.sub(regex2, r'"\g<0>"', r)) for r in response]
     return response
 
-#Generate feature meaning
+#Identify feature meaning
 def generate_labelft(model:str, prompt:str, concept_triplet:list)-> str:
     """
     calls LLMs for graph feature explain  
@@ -194,14 +186,14 @@ def generate_labelft(model:str, prompt:str, concept_triplet:list)-> str:
                                             })
         
         
-    #remover o caracter "*"
+    #Remove "*"
     response = re.sub(string=response,pattern="\*",repl="")
     
-    #Encontrar a linha que começa com "Short description"
+    #Find the line begining with "Short description"
     regex = r"^Short description:.*"
     response = re.findall(regex, response, re.MULTILINE)
 
-    # Remover o prefixo "Short description:"
+    #Remove prefix "Short description:"
     regex1 = r"^Short description:"
     response = re.sub(regex1,"", response[0])
 

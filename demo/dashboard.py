@@ -8,8 +8,8 @@ import pandas as pd
 import streamlit as st
 
 def launch_dashboard():
-    tab_concept_load, tab_semantics, tab_data_load, tab_eda = st.tabs(["Carregar Conceitos", "Definir Semânticas",
-                                                                       "Carregar Dados", "GraFOCAL"])
+    tab_concept_load, tab_semantics, tab_data_load, tab_eda = st.tabs(["Load Concepts", "Identify Semantics",
+                                                                       "Load Data", "ClinicoGraph"])
 
     with tab_concept_load:
         concept_load_tab()
